@@ -69,14 +69,18 @@ button:hover {
     margin-top: 20px;
 }
 
-.hidden {
-    display: none;
-}
-
 .error-message {
     color: #d9534f;
     background-color: #f2dede;
     padding: 10px;
     border-radius: 8px;
     margin-top: 20px;
+}
+
+#pokemon-name {
+  text-transform: capitalize;
+}
+
+.hidden {
+    display: none;
 }

@@ -3,6 +3,16 @@ const searchBtn = document.querySelector("#search-btn");
 const pokemonInput = document.querySelector("#pokemon-input");
 const pokemonContainer = document.querySelector("#pokemon-container");
 const errorMessage = document.querySelector("#error-message");
+const pokemonName = document.querySelector("#pokemon-name");
+const pokemonId = document.querySelector("#pokemon-id");
+
+// Función que muestra los datos del Pokémon en la tarjeta
+const mostrarPokemon = (datos) => {
+  pokemonName.textContent = datos.name;
+  pokemonId.textContent = `#${datos.id.toString().padStart(3, "0")}`;
+
+  pokemonContainer.classList.remove("hidden");
+};
 
 // Función que pide los datos de un Pokémon a la PokéAPI
 const obtenerPokemon = async (termino) => {
@@ -14,7 +24,7 @@ const obtenerPokemon = async (termino) => {
       throw new Error("Pokémon no encontrado");
     }
     const datos = await respuesta.json();
-    console.log(datos);
+    mostrarPokemon(datos);
   } catch (error) {
     console.error(error);
     pokemonContainer.classList.add("hidden");
