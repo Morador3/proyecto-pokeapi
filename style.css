@@ -73,8 +73,7 @@ button:hover {
     display: none;
 }
 
-.error-hidden {
-    display: none;
+.error-message {
     color: #d9534f;
     background-color: #f2dede;
     padding: 10px;
