@@ -8,6 +8,28 @@ const pokemonId = document.querySelector("#pokemon-id");
 const pokemonImage = document.querySelector("#pokemon-image");
 const pokemonTypes = document.querySelector("#pokemon-types");
 
+// Traducción de los tipos de inglés a español
+const tiposEnEspanol = {
+  normal: "Normal",
+  fire: "Fuego",
+  water: "Agua",
+  electric: "Eléctrico",
+  grass: "Planta",
+  ice: "Hielo",
+  fighting: "Lucha",
+  poison: "Veneno",
+  ground: "Tierra",
+  flying: "Volador",
+  psychic: "Psíquico",
+  bug: "Bicho",
+  rock: "Roca",
+  ghost: "Fantasma",
+  dragon: "Dragón",
+  dark: "Siniestro",
+  steel: "Acero",
+  fairy: "Hada",
+};
+
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
   console.log(datos);
@@ -21,7 +43,7 @@ const mostrarPokemon = (datos) => {
   pokemonTypes.textContent = "";
   datos.types.forEach((tipo) => {
     const etiqueta = document.createElement("span");
-    etiqueta.textContent = tipo.type.name;
+    etiqueta.textContent = tiposEnEspanol[tipo.type.name] || tipo.type.name;
     etiqueta.classList.add("type");
     etiqueta.style.backgroundColor = `var(--type-${tipo.type.name}, #777)`;
     pokemonTypes.appendChild(etiqueta);
