@@ -124,8 +124,33 @@ button:hover {
 
 .stat {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   padding: 5px 0;
+}
+
+.stat-name {
+  width: 110px;
+  text-align: left;
+}
+
+.stat-value {
+  width: 35px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background-color: #cc0000;
 }
 
 .hidden {
