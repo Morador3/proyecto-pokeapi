@@ -7,6 +7,7 @@ const pokemonName = document.querySelector("#pokemon-name");
 const pokemonId = document.querySelector("#pokemon-id");
 const pokemonImage = document.querySelector("#pokemon-image");
 const pokemonTypes = document.querySelector("#pokemon-types");
+const pokemonStats = document.querySelector("#pokemon-stats");
 
 // Traducción de los tipos de inglés a español
 const tiposEnEspanol = {
@@ -30,6 +31,16 @@ const tiposEnEspanol = {
   fairy: "Hada",
 };
 
+// Traducción de las estadísticas de inglés a español
+const statsEnEspanol = {
+  hp: "PS",
+  attack: "Ataque",
+  defense: "Defensa",
+  "special-attack": "Ataque Esp.",
+  "special-defense": "Defensa Esp.",
+  speed: "Velocidad",
+};
+
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
   console.log(datos);
@@ -47,6 +58,18 @@ const mostrarPokemon = (datos) => {
     etiqueta.classList.add("type");
     etiqueta.style.backgroundColor = `var(--type-${tipo.type.name}, #777)`;
     pokemonTypes.appendChild(etiqueta);
+  });
+  pokemonStats.textContent = "";
+  datos.stats.forEach((estadistica) => {
+    const fila = document.createElement("li");
+    fila.classList.add("stat");
+    const nombre = document.createElement("span");
+    nombre.textContent = statsEnEspanol[estadistica.stat.name] || estadistica.stat.name;
+    const valor = document.createElement("span");
+    valor.textContent = estadistica.base_stat;
+    fila.appendChild(nombre);
+    fila.appendChild(valor);
+    pokemonStats.appendChild(fila);
   });
 };
 
