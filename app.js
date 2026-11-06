@@ -43,7 +43,6 @@ const statsEnEspanol = {
 
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
-  console.log(datos);
   pokemonName.textContent = datos.name;
   pokemonId.textContent = `#${datos.id.toString().padStart(3, "0")}`;
   pokemonImage.src =
