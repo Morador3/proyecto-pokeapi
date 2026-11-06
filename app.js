@@ -5,12 +5,17 @@ const pokemonContainer = document.querySelector("#pokemon-container");
 const errorMessage = document.querySelector("#error-message");
 const pokemonName = document.querySelector("#pokemon-name");
 const pokemonId = document.querySelector("#pokemon-id");
+const pokemonImage = document.querySelector("#pokemon-image");
 
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
+  console.log(datos);
   pokemonName.textContent = datos.name;
   pokemonId.textContent = `#${datos.id.toString().padStart(3, "0")}`;
-
+  pokemonImage.src =
+    datos.sprites.other["official-artwork"].front_default ||
+    datos.sprites.front_default;
+  pokemonImage.alt = `Imagen de ${datos.name}`;
   pokemonContainer.classList.remove("hidden");
 };
 

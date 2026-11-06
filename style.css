@@ -81,6 +81,11 @@ button:hover {
   text-transform: capitalize;
 }
 
+#pokemon-image {
+  width: 200px;
+  max-width: 100%;
+}
+
 .hidden {
     display: none;
 }
