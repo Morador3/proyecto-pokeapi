@@ -23,6 +23,7 @@ const mostrarPokemon = (datos) => {
     const etiqueta = document.createElement("span");
     etiqueta.textContent = tipo.type.name;
     etiqueta.classList.add("type");
+    etiqueta.style.backgroundColor = `var(--type-${tipo.type.name}, #777)`;
     pokemonTypes.appendChild(etiqueta);
   });
 };
