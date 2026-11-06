@@ -6,6 +6,7 @@ const errorMessage = document.querySelector("#error-message");
 const pokemonName = document.querySelector("#pokemon-name");
 const pokemonId = document.querySelector("#pokemon-id");
 const pokemonImage = document.querySelector("#pokemon-image");
+const pokemonTypes = document.querySelector("#pokemon-types");
 
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
@@ -17,6 +18,13 @@ const mostrarPokemon = (datos) => {
     datos.sprites.front_default;
   pokemonImage.alt = `Imagen de ${datos.name}`;
   pokemonContainer.classList.remove("hidden");
+  pokemonTypes.textContent = "";
+  datos.types.forEach((tipo) => {
+    const etiqueta = document.createElement("span");
+    etiqueta.textContent = tipo.type.name;
+    etiqueta.classList.add("type");
+    pokemonTypes.appendChild(etiqueta);
+  });
 };
 
 // Función que pide los datos de un Pokémon a la PokéAPI
