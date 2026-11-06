@@ -8,6 +8,7 @@ const pokemonId = document.querySelector("#pokemon-id");
 const pokemonImage = document.querySelector("#pokemon-image");
 const pokemonTypes = document.querySelector("#pokemon-types");
 const pokemonStats = document.querySelector("#pokemon-stats");
+const pokemonHp = document.querySelector("#pokemon-hp");
 
 // Traducción de los tipos de inglés a español
 const tiposEnEspanol = {
@@ -45,6 +46,7 @@ const statsEnEspanol = {
 const mostrarPokemon = (datos) => {
   pokemonName.textContent = datos.name;
   pokemonId.textContent = `#${datos.id.toString().padStart(3, "0")}`;
+  pokemonHp.textContent = `PS ${datos.stats[0].base_stat}`;
   pokemonImage.src =
     datos.sprites.other["official-artwork"].front_default ||
     datos.sprites.front_default;
