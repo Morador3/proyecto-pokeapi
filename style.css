@@ -403,6 +403,16 @@ button:hover {
   background-color: var(--card-color);
 }
 
+/* Pie de carta */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 2px;
+  font-size: 0.65rem;
+  color: #6b6b6b;
+}
+
 /* Mensaje de error */
 .error-message {
   color: #d9534f;
