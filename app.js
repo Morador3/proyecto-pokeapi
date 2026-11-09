@@ -10,6 +10,8 @@ const pokemonTypes = document.querySelector("#pokemon-types");
 const pokemonStats = document.querySelector("#pokemon-stats");
 const pokemonHp = document.querySelector("#pokemon-hp");
 const cardOverlay = document.querySelector("#card-overlay");
+const pokemonHeight = document.querySelector("#pokemon-height");
+const pokemonWeight = document.querySelector("#pokemon-weight");
 
 // Traducción de los tipos de inglés a español
 const tiposEnEspanol = {
@@ -45,16 +47,33 @@ const statsEnEspanol = {
 
 // Función que muestra los datos del Pokémon en la tarjeta
 const mostrarPokemon = (datos) => {
+  // ---- Cabecera: nombre, número y PS ----
   pokemonName.textContent = datos.name;
   pokemonId.textContent = `#${datos.id.toString().padStart(3, "0")}`;
   pokemonHp.textContent = `PS ${datos.stats[0].base_stat}`;
+
+  // ---- Pie de carta: altura y peso (en metros y kilos, con coma decimal) ----
+  const altura = (datos.height / 10).toString().replace(".", ",");
+  const peso = (datos.weight / 10).toString().replace(".", ",");
+  pokemonHeight.textContent = `Altura ${altura} m`;
+  pokemonWeight.textContent = `Peso ${peso} kg`;
+
+  // ---- Imagen: la oficial o, si no existe, el sprite ----
   pokemonImage.src =
     datos.sprites.other["official-artwork"].front_default ||
     datos.sprites.front_default;
   pokemonImage.alt = `Imagen de ${datos.name}`;
+
+  // ---- Colores de la carta: primer y segundo tipo ----
   const tipoPrincipal = datos.types[0].type.name;
+  const tipoSecundario = (datos.types[1] || datos.types[0]).type.name;
   pokemonContainer.style.setProperty("--card-color", `var(--type-${tipoPrincipal})`);
+  pokemonContainer.style.setProperty("--card-color-2", `var(--type-${tipoSecundario})`);
+
+  // ---- Mostrar la carta ----
   pokemonContainer.classList.remove("hidden");
+
+  // ---- Tipos: una etiqueta por cada tipo ----
   pokemonTypes.textContent = "";
   datos.types.forEach((tipo) => {
     const etiqueta = document.createElement("span");
@@ -63,16 +82,22 @@ const mostrarPokemon = (datos) => {
     etiqueta.style.backgroundColor = `var(--type-${tipo.type.name}, #777)`;
     pokemonTypes.appendChild(etiqueta);
   });
+
+  // ---- Estadísticas: una fila con nombre, valor y barra por cada una ----
   pokemonStats.textContent = "";
   datos.stats.forEach((estadistica) => {
     const fila = document.createElement("li");
     fila.classList.add("stat");
+
     const nombre = document.createElement("span");
     nombre.textContent = statsEnEspanol[estadistica.stat.name] || estadistica.stat.name;
     nombre.classList.add("stat-name");
+
     const valor = document.createElement("span");
     valor.textContent = estadistica.base_stat;
     valor.classList.add("stat-value");
+
+    // Barra: el relleno ocupa un % según el valor (el máximo posible es 255)
     const barra = document.createElement("div");
     barra.classList.add("stat-bar");
     const relleno = document.createElement("div");
@@ -80,6 +105,7 @@ const mostrarPokemon = (datos) => {
     const porcentaje = Math.round((estadistica.base_stat / 255) * 100);
     relleno.style.width = `${porcentaje}%`;
     barra.appendChild(relleno);
+
     fila.appendChild(nombre);
     fila.appendChild(valor);
     fila.appendChild(barra);
@@ -122,6 +148,10 @@ pokemonInput.addEventListener("keydown", (e) => {
 
 // Inclinar la carta en 3D siguiendo al ratón
 pokemonContainer.addEventListener("mousemove", (e) => {
+  // En pantallas táctiles no inclinamos la carta
+  if (!window.matchMedia("(hover: hover)").matches) {
+    return;
+  }
   const caja = pokemonContainer.getBoundingClientRect();
   const x = (e.clientX - caja.left) / caja.width;
   const y = (e.clientY - caja.top) / caja.height;

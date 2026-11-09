@@ -87,6 +87,7 @@ button:hover {
 /* ---- Carta: el objeto físico que se mueve en 3D ---- */
 .pokemon-card {
   --card-color: #777;
+  --card-color-2: #777;
   --rx: 0deg;
   --ry: 0deg;
   --mx: 50%;
@@ -103,29 +104,33 @@ button:hover {
 
 /* ---- Cara delantera ---- */
 .card-front {
+  --frame: 10px;
   position: relative;
   aspect-ratio: 63 / 88;
   display: flex;
   flex-direction: column;
   padding: 12px;
-  background: linear-gradient(145deg, #fffef8, #f1ecda);
-  border: 10px solid var(--card-color);
+  border: var(--frame) solid transparent;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  background:
+    linear-gradient(145deg, #fffef8, #f1ecda) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.45), transparent 35%, transparent 65%, rgba(0, 0, 0, 0.25)) border-box,
+    linear-gradient(135deg, var(--card-color), var(--card-color-2)) border-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 12px 24px rgba(0, 0, 0, 0.2);
   backface-visibility: hidden;
   transition: box-shadow 0.3s;
-}
-
-.pokemon-card:hover .card-front {
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Textura de papel */
 .card-front::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 6px;
+  inset: calc(-1 * var(--frame));
+  border-radius: 16px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.12;
   mix-blend-mode: multiply;
@@ -136,8 +141,8 @@ button:hover {
 .card-front::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 6px;
+  inset: calc(-1 * var(--frame));
+  border-radius: 16px;
   background:
     radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.25), transparent 60%),
     linear-gradient(115deg, transparent 20%, rgba(255, 0, 150, 0.07) 35%, rgba(0, 200, 255, 0.07) 50%, rgba(255, 230, 0, 0.07) 65%, transparent 80%);
@@ -148,13 +153,8 @@ button:hover {
   pointer-events: none;
 }
 
-.pokemon-card:hover .card-front::after {
-  opacity: 1;
-}
-
 /* ---- Reverso ---- */
 .card-back {
-    
   --back-dark: #004177;
   --back-blue: #3561a3;
   --back-blue-2: #03244d;
@@ -271,34 +271,56 @@ button:hover {
 }
 
 #pokemon-name {
-  font-size: 1.4rem;
+  font-family: 'Gill Sans MT Condensed', 'Gill Sans Condensed', 'Gill Sans', 'Cabin Condensed', 'Arial Narrow', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
   text-transform: capitalize;
 }
 
 .card-hp {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-family: 'Futura', 'Jost', 'Century Gothic', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
   color: #cc0000;
 }
 
 .card-art {
-  background: linear-gradient(160deg, var(--card-color), #fffdf5);
+    background: linear-gradient(160deg, var(--card-color), var(--card-color-2), #fffdf5);
   border: 4px solid #d4c08a;
   border-radius: 6px;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 10px;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 #pokemon-image {
-  display: block;
-  height: 150px;
-  max-width: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.25);
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* Trama de impresión y profundidad de la ventana */
+.card-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }
 
 /* Franja de información: número y tipos */
@@ -335,8 +357,12 @@ button:hover {
 /* Estadísticas */
 #pokemon-stats {
   list-style: none;
-  padding: 0;
   margin-top: 4px;
+  padding: 6px 8px;
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .stat {
@@ -371,6 +397,16 @@ button:hover {
   background-color: var(--card-color);
 }
 
+/* Pie de carta */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 2px;
+  font-size: 0.65rem;
+  color: #6b6b6b;
+}
+
 /* Mensaje de error */
 .error-message {
   color: #d9534f;
@@ -378,6 +414,67 @@ button:hover {
   padding: 10px;
   border-radius: 8px;
   margin-top: 20px;
+}
+
+/* ---- Adaptación a pantallas poco altas ---- */
+@media (max-height: 750px) {
+  .pokemon-card.ampliada {
+    --zoom: 1.15;
+  }
+}
+
+/* ---- Adaptación a móviles ---- */
+@media (max-width: 500px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  /* La carta más pequeña */
+  .pokemon-card {
+    max-width: 280px;
+  }
+
+  .card-front {
+    padding: 8px;
+    --frame: 8px;
+  }
+
+  /* Su contenido, también más pequeño */
+  #pokemon-name {
+    font-size: 1.4rem;
+  }
+
+  .card-hp {
+    font-size: 1.15rem;
+  }
+
+  .stat {
+    font-size: 0.8rem;
+  }
+
+  .stat-name {
+    width: 85px;
+  }
+
+  /* Al ampliarla, ahora sí crece */
+  .pokemon-card.ampliada {
+    --zoom: 1.25;
+  }
+}
+
+/* ---- Efectos de ratón, solo si hay ratón ---- */
+@media (hover: hover) {
+  .pokemon-card:hover .card-front {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 0 0 1px rgba(0, 0, 0, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.25),
+      0 20px 35px rgba(0, 0, 0, 0.25);
+  }
+
+  .pokemon-card:hover .card-front::after {
+    opacity: 1;
+  }
 }
 
 /* Ocultar elementos. Siempre la última regla para que gane */
