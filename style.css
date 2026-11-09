@@ -428,6 +428,13 @@ button:hover {
   margin-top: 20px;
 }
 
+/* ---- Adaptación a pantallas poco altas ---- */
+@media (max-height: 750px) {
+  .pokemon-card.ampliada {
+    --zoom: 1.15;
+  }
+}
+
 /* ---- Adaptación a móviles ---- */
 @media (max-width: 500px) {
   h1 {
