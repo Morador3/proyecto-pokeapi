@@ -283,13 +283,19 @@ button:hover {
 }
 
 #pokemon-name {
-  font-size: 1.4rem;
+  font-family: 'Gill Sans MT Condensed', 'Gill Sans Condensed', 'Gill Sans', 'Cabin Condensed', 'Arial Narrow', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
   text-transform: capitalize;
 }
 
 .card-hp {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-family: 'Futura', 'Jost', 'Century Gothic', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
   color: #cc0000;
 }
 
@@ -440,11 +446,11 @@ button:hover {
 
   /* Su contenido, también más pequeño */
   #pokemon-name {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .card-hp {
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
 
   .stat {
