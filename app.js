@@ -9,6 +9,7 @@ const pokemonImage = document.querySelector("#pokemon-image");
 const pokemonTypes = document.querySelector("#pokemon-types");
 const pokemonStats = document.querySelector("#pokemon-stats");
 const pokemonHp = document.querySelector("#pokemon-hp");
+const cardOverlay = document.querySelector("#card-overlay");
 
 // Traducción de los tipos de inglés a español
 const tiposEnEspanol = {
@@ -137,7 +138,20 @@ pokemonContainer.addEventListener("mouseleave", () => {
   pokemonContainer.style.setProperty("--ry", "0deg");
 });
 
+// Ampliar o reducir la carta
+const alternarCarta = () => {
+  pokemonContainer.classList.toggle("ampliada");
+  cardOverlay.classList.toggle("hidden");
+};
 
+pokemonContainer.addEventListener("click", alternarCarta);
+cardOverlay.addEventListener("click", alternarCarta);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && pokemonContainer.classList.contains("ampliada")) {
+    alternarCarta();
+  }
+});
 
 
 
