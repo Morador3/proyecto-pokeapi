@@ -119,6 +119,23 @@ pokemonInput.addEventListener("keydown", (e) => {
   }
 });
 
+// Inclinar la carta en 3D siguiendo al ratón
+pokemonContainer.addEventListener("mousemove", (e) => {
+  const caja = pokemonContainer.getBoundingClientRect();
+  const x = (e.clientX - caja.left) / caja.width;
+  const y = (e.clientY - caja.top) / caja.height;
+  const giroY = (x - 0.5) * 20;
+  const giroX = (0.5 - y) * 20;
+  pokemonContainer.style.setProperty("--rx", `${giroX}deg`);
+  pokemonContainer.style.setProperty("--ry", `${giroY}deg`);
+});
+
+pokemonContainer.addEventListener("mouseleave", () => {
+  pokemonContainer.style.setProperty("--rx", "0deg");
+  pokemonContainer.style.setProperty("--ry", "0deg");
+});
+
+
 
 
 
