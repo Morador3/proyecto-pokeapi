@@ -125,14 +125,6 @@ button:hover {
   transition: box-shadow 0.3s;
 }
 
-.pokemon-card:hover .card-front {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    0 0 0 1px rgba(0, 0, 0, 0.3),
-    0 4px 8px rgba(0, 0, 0, 0.25),
-    0 20px 35px rgba(0, 0, 0, 0.25);
-}
-
 /* Textura de papel */
 .card-front::before {
   content: "";
@@ -159,10 +151,6 @@ button:hover {
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
-}
-
-.pokemon-card:hover .card-front::after {
-  opacity: 1;
 }
 
 /* ---- Reverso ---- */
@@ -471,6 +459,21 @@ button:hover {
   /* Al ampliarla, ahora sí crece */
   .pokemon-card.ampliada {
     --zoom: 1.25;
+  }
+}
+
+/* ---- Efectos de ratón, solo si hay ratón ---- */
+@media (hover: hover) {
+  .pokemon-card:hover .card-front {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 0 0 1px rgba(0, 0, 0, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.25),
+      0 20px 35px rgba(0, 0, 0, 0.25);
+  }
+
+  .pokemon-card:hover .card-front::after {
+    opacity: 1;
   }
 }
 

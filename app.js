@@ -148,6 +148,10 @@ pokemonInput.addEventListener("keydown", (e) => {
 
 // Inclinar la carta en 3D siguiendo al ratón
 pokemonContainer.addEventListener("mousemove", (e) => {
+  // En pantallas táctiles no inclinamos la carta
+  if (!window.matchMedia("(hover: hover)").matches) {
+    return;
+  }
   const caja = pokemonContainer.getBoundingClientRect();
   const x = (e.clientX - caja.left) / caja.width;
   const y = (e.clientY - caja.top) / caja.height;
