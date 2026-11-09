@@ -380,6 +380,49 @@ button:hover {
   margin-top: 20px;
 }
 
+/* ---- Adaptación a móviles ---- */
+@media (max-width: 500px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  /* La carta más pequeña */
+  .pokemon-card {
+    max-width: 280px;
+  }
+
+  .card-front {
+    padding: 8px;
+    border-width: 8px;
+  }
+
+  /* Su contenido, también más pequeño */
+  #pokemon-name {
+    font-size: 1.2rem;
+  }
+
+  .card-hp {
+    font-size: 1rem;
+  }
+
+  #pokemon-image {
+    height: 90px;
+  }
+
+  .stat {
+    font-size: 0.8rem;
+  }
+
+  .stat-name {
+    width: 85px;
+  }
+
+  /* Al ampliarla, ahora sí crece */
+  .pokemon-card.ampliada {
+    --zoom: 1.25;
+  }
+}
+
 /* Ocultar elementos. Siempre la última regla para que gane */
 .hidden {
   display: none;
