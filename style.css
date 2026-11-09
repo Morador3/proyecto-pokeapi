@@ -84,7 +84,7 @@ button:hover {
   background-color: #990000;
 }
 
-/* Carta del Pokémon */
+/* ---- Carta: el objeto físico que se mueve en 3D ---- */
 .pokemon-card {
   --card-color: #777;
   --rx: 0deg;
@@ -94,24 +94,34 @@ button:hover {
   position: relative;
   width: 100%;
   max-width: 340px;
+  margin: 20px auto 0;
+  cursor: pointer;
+  transform: perspective(800px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+/* ---- Cara delantera ---- */
+.card-front {
+  position: relative;
   aspect-ratio: 63 / 88;
   display: flex;
   flex-direction: column;
-  margin: 20px auto 0;
   padding: 12px;
-    background: linear-gradient(145deg, #fffef8, #f1ecda);
+  background: linear-gradient(145deg, #fffef8, #f1ecda);
   border: 10px solid var(--card-color);
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  transform: perspective(800px) rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.15s ease-out, box-shadow 0.3s;
+  backface-visibility: hidden;
+  transition: box-shadow 0.3s;
 }
 
-.pokemon-card:hover {
+.pokemon-card:hover .card-front {
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
 }
 
-.pokemon-card::before {
+/* Textura de papel */
+.card-front::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -122,28 +132,62 @@ button:hover {
   pointer-events: none;
 }
 
-.pokemon-card::after {
+/* Brillo holográfico */
+.card-front::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 6px;
   background:
-    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.40), transparent 55%),
-    linear-gradient(115deg, transparent 20%, rgba(255, 0, 150, 0.10) 35%, rgba(0, 200, 255, 0.10) 50%, rgba(255, 230, 0, 0.10) 65%, transparent 80%);
+    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.25), transparent 60%),
+    linear-gradient(115deg, transparent 20%, rgba(255, 0, 150, 0.07) 35%, rgba(0, 200, 255, 0.07) 50%, rgba(255, 230, 0, 0.07) 65%, transparent 80%);
+  background-size: 100% 100%, 200% 200%;
   background-position: 0 0, var(--mx) var(--my);
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
 }
 
-.pokemon-card:hover::after {
+.pokemon-card:hover .card-front::after {
   opacity: 1;
 }
 
-.pokemon-card {
-  cursor: pointer;
+/* ---- Reverso ---- */
+.card-back {
+    
+  --back-dark: #004177;
+  --back-blue: #3561a3;
+  --back-blue-2: #03244d;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid var(--back-dark);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle, rgba(255, 215, 120, 0.35), transparent 55%),
+    repeating-linear-gradient(45deg, var(--back-blue) 0 12px, var(--back-blue-2) 40px 80px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
 }
 
+.card-back-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  border: 6px solid #d4af37;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6d5, #e8c766);
+  color: #b8860b;
+  font-size: 3.5rem;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+/* ---- Carta ampliada ---- */
 .pokemon-card.ampliada {
   --zoom: 1.4;
   position: fixed;
@@ -152,6 +196,53 @@ button:hover {
   margin: 0;
   z-index: 20;
   transform: translate(-50%, -50%) perspective(800px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--zoom));
+  animation: girarCarta 0.7s ease-out;
+}
+
+.pokemon-card.ampliada .card-front,
+.pokemon-card.ampliada .card-back {
+  animation: aparecer 0.7s ease-out;
+}
+
+@keyframes girarCarta {
+  from {
+    transform: translate(-50%, -50%) perspective(800px) rotateY(-360deg) scale(0.5);
+  }
+  to {
+    transform: translate(-50%, -50%) perspective(800px) rotateY(0deg) scale(var(--zoom));
+  }
+}
+
+/* ---- Cierre de la carta ---- */
+.pokemon-card.cerrando {
+  animation: cerrarCarta 0.5s ease-in forwards;
+}
+
+.pokemon-card.cerrando .card-front,
+.pokemon-card.cerrando .card-back {
+  animation: desaparecer 0.5s ease-in forwards;
+}
+
+.overlay.cerrando {
+  animation: desaparecer 0.5s ease-in forwards;
+}
+
+@keyframes cerrarCarta {
+  from {
+    transform: translate(-50%, -50%) perspective(800px) rotateY(0deg) scale(var(--zoom));
+  }
+  to {
+    transform: translate(-50%, -50%) perspective(800px) rotateY(360deg) scale(0.5);
+  }
+}
+
+@keyframes desaparecer {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .overlay {
@@ -160,6 +251,16 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 10;
   cursor: pointer;
+  animation: aparecer 0.3s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .card-header {

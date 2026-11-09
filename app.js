@@ -138,10 +138,37 @@ pokemonContainer.addEventListener("mouseleave", () => {
   pokemonContainer.style.setProperty("--ry", "0deg");
 });
 
-// Ampliar o reducir la carta
+// Ampliar o reducir la carta:
+// Abrir la carta
+const abrirCarta = () => {
+  pokemonContainer.classList.add("ampliada");
+  cardOverlay.classList.remove("hidden");
+};
+
+// Cerrar la carta con animación
+const cerrarCarta = () => {
+  pokemonContainer.classList.add("cerrando");
+  cardOverlay.classList.add("cerrando");
+
+  // Cuando termine la animación, devolvemos la carta a su sitio
+  pokemonContainer.addEventListener("animationend", () => {
+    pokemonContainer.classList.remove("ampliada", "cerrando");
+    cardOverlay.classList.remove("cerrando");
+    cardOverlay.classList.add("hidden");
+  }, { once: true });
+};
+
+// Decidir si hay que abrir o cerrar
 const alternarCarta = () => {
-  pokemonContainer.classList.toggle("ampliada");
-  cardOverlay.classList.toggle("hidden");
+  if (pokemonContainer.classList.contains("cerrando")) {
+    return;
+  }
+
+  if (pokemonContainer.classList.contains("ampliada")) {
+    cerrarCarta();
+  } else {
+    abrirCarta();
+  }
 };
 
 pokemonContainer.addEventListener("click", alternarCarta);
