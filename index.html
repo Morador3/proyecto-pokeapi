@@ -19,18 +19,33 @@
 
         <!-- Contenedor para la Vista de Detalle -->
         <div id="pokemon-container" class="pokemon-card hidden">
+        <div class="card-front">
+            <header class="card-header">
             <h2 id="pokemon-name"></h2>
+            <p id="pokemon-hp" class="card-hp"></p>
+            </header>
+            <div class="card-art">
+            <img id="pokemon-image" alt="">
+            </div>
+            <div class="card-info">
             <p id="pokemon-id"></p>
-            <img id="pokemon-image" src="" alt="">
             <div id="pokemon-types"></div>
+            </div>
             <ul id="pokemon-stats"></ul>
         </div>
-
+        <div class="card-back" aria-hidden="true">
+            <span class="card-back-emblem">★</span>
+        </div>
+        </div>
+        
         <!-- Mensaje de Error -->
         <div id="error-message" class="error-message hidden">
             <p>Lo sentimos, no se ha encontrado el Pokémon o ha ocurrido un error.</p>
         </div>
     </main>
+
+    <!-- Capa oscura que aparece al ampliar la carta -->
+    <div id="card-overlay" class="overlay hidden"></div>
 
     <!-- Enlazamos nuestro archivo JavaScript -->
     <script src="app.js"></script>
