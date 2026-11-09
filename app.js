@@ -128,6 +128,8 @@ pokemonContainer.addEventListener("mousemove", (e) => {
   const giroX = (0.5 - y) * 20;
   pokemonContainer.style.setProperty("--rx", `${giroX}deg`);
   pokemonContainer.style.setProperty("--ry", `${giroY}deg`);
+  pokemonContainer.style.setProperty("--mx", `${x * 100}%`);
+  pokemonContainer.style.setProperty("--my", `${y * 100}%`);
 });
 
 pokemonContainer.addEventListener("mouseleave", () => {
