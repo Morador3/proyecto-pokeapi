@@ -53,7 +53,9 @@ const mostrarPokemon = (datos) => {
     datos.sprites.front_default;
   pokemonImage.alt = `Imagen de ${datos.name}`;
   const tipoPrincipal = datos.types[0].type.name;
+  const tipoSecundario = (datos.types[1] || datos.types[0]).type.name;
   pokemonContainer.style.setProperty("--card-color", `var(--type-${tipoPrincipal})`);
+  pokemonContainer.style.setProperty("--card-color-2", `var(--type-${tipoSecundario})`);
   pokemonContainer.classList.remove("hidden");
   pokemonTypes.textContent = "";
   datos.types.forEach((tipo) => {
