@@ -416,6 +416,17 @@ button:hover {
   margin-top: 20px;
 }
 
+.loading {
+  margin-top: 20px;
+  color: #777;
+  font-style: italic;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 /* ---- Adaptación a pantallas poco altas ---- */
 @media (max-height: 750px) {
   .pokemon-card.ampliada {

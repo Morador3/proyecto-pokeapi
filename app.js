@@ -12,6 +12,7 @@ const pokemonHp = document.querySelector("#pokemon-hp");
 const cardOverlay = document.querySelector("#card-overlay");
 const pokemonHeight = document.querySelector("#pokemon-height");
 const pokemonWeight = document.querySelector("#pokemon-weight");
+const loadingMessage = document.querySelector("#loading-message");
 
 // Traducción de los tipos de inglés a español
 const tiposEnEspanol = {
@@ -116,18 +117,42 @@ const mostrarPokemon = (datos) => {
 // Función que pide los datos de un Pokémon a la PokéAPI
 const obtenerPokemon = async (termino) => {
   try {
+    // Preparamos la pantalla: sin errores, con el aviso de carga y el botón desactivado
     errorMessage.classList.add("hidden");
+    loadingMessage.classList.remove("hidden");
+    searchBtn.disabled = true;
+
     const url = `https://pokeapi.co/api/v2/pokemon/${termino.toLowerCase()}`;
     const respuesta = await fetch(url);
-    if (!respuesta.ok) {
-      throw new Error("Pokémon no encontrado");
+
+    // 404 significa que el Pokémon no existe; cualquier otro fallo es del servidor
+    if (respuesta.status === 404) {
+      throw new Error("no-encontrado");
     }
+    if (!respuesta.ok) {
+      throw new Error("error-servidor");
+    }
+
     const datos = await respuesta.json();
     mostrarPokemon(datos);
+
   } catch (error) {
     console.error(error);
     pokemonContainer.classList.add("hidden");
+
+    // Elegimos el mensaje según el tipo de error
+    if (error.message === "no-encontrado") {
+      errorMessage.textContent = `No hemos encontrado ningún Pokémon llamado «${termino}». Revisa que esté bien escrito o prueba con su número.`;
+    } else {
+      errorMessage.textContent = "No hemos podido conectar con la PokéAPI. Comprueba tu conexión a internet e inténtalo de nuevo.";
+    }
+
     errorMessage.classList.remove("hidden");
+
+  } finally {
+    // Pase lo que pase, quitamos el aviso de carga y reactivamos el botón
+    loadingMessage.classList.add("hidden");
+    searchBtn.disabled = false;
   }
 };
 

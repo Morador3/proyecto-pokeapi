@@ -21,6 +21,8 @@
             <button id="search-btn">Buscar</button>
         </div>
 
+        <p id="loading-message" class="loading hidden">Buscando Pokémon…</p>
+
         <!-- Contenedor para la Vista de Detalle -->
         <div id="pokemon-container" class="pokemon-card hidden">
         <div class="card-front">
@@ -48,9 +50,7 @@
         </div>
         
         <!-- Mensaje de Error -->
-        <div id="error-message" class="error-message hidden">
-            <p>Lo sentimos, no se ha encontrado el Pokémon o ha ocurrido un error.</p>
-        </div>
+        <div id="error-message" class="error-message hidden" role="alert"></div>
     </main>
 
     <!-- Capa oscura que aparece al ampliar la carta -->
